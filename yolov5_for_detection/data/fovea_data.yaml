@@ -1,0 +1,5 @@
+train: E:/git repositories/Fundus-Imaging-Diagnosis/datasets_for_yolov5/train/images
+val: E:/git repositories/Fundus-Imaging-Diagnosis/datasets_for_yolov5/valid/images
+
+nc: 1
+names: ['Fovea']
