@@ -86,7 +86,7 @@ TensorBoard: Start with 'tensorboard --logdir runs\train', view at http://localh
 
 训练100轮的结果:
 
-![](doc\detection_normal_results.png)
+![](./doc/detection_normal_results.png)
 
 由于是单目标物体检测，我们重点关注的指标是mAP_0.5 和 mAP_0.5 : 0.95
 
@@ -128,13 +128,13 @@ TensorBoard: Start with 'tensorboard --logdir runs\train', view at http://localh
 
 原图像:
 
-<img src="doc\detection_normal.jpg" style="zoom:33%;" />
+<img src="./doc/detection_normal.jpg" style="zoom:33%;" />
 
 数据增强:
 
-| <img src="doc\detection_transform_1 (1).jpg" style="zoom:25%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (2).jpg" style="zoom:25%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (3).jpg" style="zoom:25%;" /> |
+| <img src="./doc/detection_transform_1 (1).jpg" style="zoom:25%;" /> | <img src="./doc/detection_transform_1 (2).jpg" style="zoom:25%;" /> | <img src="./doc/detection_transform_1 (3).jpg" style="zoom:25%;" /> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (4).jpg" style="zoom:25%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (5).jpg" style="zoom:25%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (6).jpg" style="zoom:25%;" /> |
+| <img src="./doc/detection_transform_1 (4).jpg" style="zoom:25%;" /> | <img src="./doc/detection_transform_1 (5).jpg" style="zoom:25%;" /> | <img src="./doc/detection_transform_1 (6).jpg" style="zoom:25%;" /> |
 
 
 
@@ -153,7 +153,7 @@ TensorBoard: Start with 'tensorboard --logdir runs\train', view at http://localh
 
 **数据增强 训练50轮的结果:**
 
-![](doc\detection_result.png)
+![](./doc/detection_result.png)
 
 可以看到训练50轮后效果已经非常好, mAP_0.5 : 0.95 达到了0.9及以上。
 
@@ -326,9 +326,9 @@ path: 3/20051020_44598_0100_PP.png    3    2
 
 采用原数据与预训练参数"pre-efficientnetv2-s.pth"进行训练100轮的结果如下:
 
-|                          train_acc                           |                          normal_acc                          |
-| :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis-main\doc\train_acc_normal.png" style="zoom:150%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis-main\doc\val_acc_normal.png" style="zoom:150%;" /> |
+|                         train_acc                         |                       normal_acc                        |
+| :-------------------------------------------------------: | :-----------------------------------------------------: |
+| <img src="doc/train_acc_normal.png" style="zoom:150%;" /> | <img src="doc/val_acc_normal.png" style="zoom:150%;" /> |
 
 可以观察到，随着训练轮数的增加, train_acc一直在增强, normal_acc波动较大，出现了一定的过拟合。
 
@@ -348,9 +348,9 @@ path: 3/20051020_44598_0100_PP.png    3    2
 
 - 去除眼球周围部分
 
-| <img src="doc\classification_normal_0.png" style="zoom: 50%;" /> | <img src="doc\classfication_transform_0.png" style="zoom: 50%;" /> |
+| <img src="doc/classification_normal_0.png" style="zoom: 50%;" /> | <img src="doc/classfication_transform_0.png" style="zoom: 50%;" /> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="doc\classification_normal_3.png" style="zoom:50%;" /> | <img src="doc\classification_transform_3.png" style="zoom:50%;" /> |
+| <img src="doc/classification_normal_3.png" style="zoom:50%;" /> | <img src="doc/classification_transform_3.png" style="zoom:50%;" /> |
 
 
 
@@ -358,9 +358,9 @@ path: 3/20051020_44598_0100_PP.png    3    2
 
 **训练结果:**
 
-| tran_acc                                                     | val_acc                                                      |
-| ------------------------------------------------------------ | ------------------------------------------------------------ |
-| <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis-main\doc\train_acc.png" style="zoom:150%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis-main\doc\val_acc.png" style="zoom:150%;" /> |
+| tran_acc                                           | val_acc                                          |
+| -------------------------------------------------- | ------------------------------------------------ |
+| <img src="doc/train_acc.png" style="zoom:150%;" /> | <img src="doc/val_acc.png" style="zoom:150%;" /> |
 
 训练100轮后在测试集上的分类准确率约为91%, 相比于未进行数据预处理提高了4%，可能是因为数据预处理让图像的特征更明显，更容易被学习提取特征， 网络在数据预处理后有了更好的表现。
 
