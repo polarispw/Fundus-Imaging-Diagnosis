@@ -14,6 +14,8 @@
 
 YOLOv5在第三代和第四代的基础上做出了一些调整。在输入端除了保留Mosaic数据增强方法、它还增加了自适应锚框计算、自适应图片缩放等功能。backbone方面，v5在输入端后的降采样方式更新为Focus模块并且调整了CSP的内部结构。在neck层级中保留了v4的融合多尺度特征图的方式。
 
+
+
 ### 训练流程
 
 #### 数据准备：（[这是处理好的数据集->模型训练](https://drive.google.com/drive/folders/1KVLMk71KkgyeYAE99oK1pT_zcdwYFJjD?usp=sharing)）
@@ -28,6 +30,8 @@ YOLOv5在第三代和第四代的基础上做出了一些调整。在输入端�
 ```
 
 为了将数据转换成YOLO对应的格式，我们参考了YOLOv5项目内提供的方法：在 [Roboflow](https://roboflow.com/?ref=ultralytics) 网站上传图片和相应的标签文件即可生成YOLO可用的数据集，并且还可以选择进行图像预处理和数据增强。除了自定义的数据集，YOLOv5还有五种规模的网络和预训练权重可供选择，我们选用的是YOLOv5m。
+
+
 
 #### 模型训练：
 
@@ -66,9 +70,81 @@ python train.py --data datasets_for_yolov5/fovea_data.yaml --cfg models/fovea.ya
 TensorBoard: Start with 'tensorboard --logdir runs\train', view at http://localhost:6006/
 ```
 
+
+
 ### 实验和结果分析
 
 #对比一下做和不做数据扩充在收敛速度上的区别
+
+**正常数据集:**
+
+​	正常数据集共有79张图片与对应的标签(检测坐标), 这里我们将训练集与数据集按 8 : 2 划分, 并在yolov5的预训练参数yolov5m.pt的基础上进行训练。
+
+
+
+**实验结果:**(这里贴一个正常训练五十轮的结果)
+
+
+
+分析一波，然后做数据增强。
+
+
+
+**数据增强:**
+
+- Flip: Horizontal   （水平翻转）
+
+
+- Brightness: Between -20% and +20%   (亮度调整)
+
+
+- Mosaic: Applied
+
+
+- Grayscale: Apply to 45% of images
+
+
+- Hue: Between -30° and +30°   (颜色变换)
+
+
+- Exposure: Between -15% and +15%  (曝光)
+
+数据增强后， 训练集大小为原来的六倍。
+
+
+
+**数据增强效果:**
+
+原图像:
+
+<img src="doc\detection_normal.jpg" style="zoom:33%;" />
+
+数据增强:
+
+| <img src="doc\detection_transform_1 (1).jpg" style="zoom:25%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (2).jpg" style="zoom:25%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (3).jpg" style="zoom:25%;" /> |
+| :----------------------------------------------------------: | :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (4).jpg" style="zoom:25%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (5).jpg" style="zoom:25%;" /> | <img src="E:\深度学习\报告\Fundus-Imaging-Diagnosis\doc\detection_transform_1 (6).jpg" style="zoom:25%;" /> |
+
+
+
+
+
+**训练50轮过程对比**
+
+|           |                           normal                            |                       enhance                        |
+| --------- | :---------------------------------------------------------: | :--------------------------------------------------: |
+| map_0.5   |   <img src="doc\map_0.5_normal.png" style="zoom:150%;" />   |   <img src="doc\map_0.5.png" style="zoom:150%;" />   |
+| 0.5:0.95  | <img src="doc\map_0.50.95_normal.png" style="zoom:150%;" /> | <img src="doc\map_0.50.95.png" style="zoom:150%;" /> |
+| precision |  <img src="doc\precision_normal.png" style="zoom:150%;" />  |  <img src="doc\precision.png" style="zoom:150%;" />  |
+| recall    |   <img src="doc\recall_normal.png" style="zoom:150%;" />    |   <img src="doc\recall.png" style="zoom:150%;" />    |
+
+
+
+**数据增强 训练100轮的结果:**
+
+![](doc\detection_result.png)
+
+
 
 ------
 
@@ -87,6 +163,8 @@ U-Net诞生的一个主要前提是，很多时候深度学习的结构需要大
 收缩路径是一个常规的卷积网络，它包含重复的2个3x3卷积，紧接着是一个RELU，一个max pooling（步长为2），用来降采样，每次降采样我们都将feature channel扩大一倍。两个3x3的卷积核之后跟一个2x2的最大化池化层，缩小图片的分辨率。扩展路径包含一个上采样（2x2上卷积），将图像大小扩大一倍，然后再使用普通的3x3卷积核，再将通道数feature channel缩小一倍。在扩展过程中将相应的下采样feature maps裁剪并且跨层连接。
 
 原论文在收缩和扩张时的特征图尺寸是不一样的，这个在实现时会比较麻烦，因此我们的代码中在最底层卷积时加入了padding操作，保证两端的尺寸一致方便拼接，此外我们也用双线性插值代替了原来的升采样所使用的转置卷积，在横向3x3卷积时让通道数减半。
+
+
 
 ### 训练流程
 
@@ -121,6 +199,8 @@ U-net_for_segmentation
 |---create_mask.py
 ```
 
+
+
 #### 模型训练：
 
 由于这个模型比较小且任务范围有限，因此没有设置载入与训练权重的方法。只需根据上面的文件目录设置好文件位置并在`train.py`的参数列表修改对应路径，或者是在命令行直接输入下面的命令即可进行训练。
@@ -133,11 +213,17 @@ python train.py --data-path datasets_for_U-net --epochs 30 --batch-size 4
 
 在训练时，模型会对输入图像进行一些翻转和随机裁剪的处理来防止过拟合。
 
+
+
 ### 实验和结果分析
 
 #这个没啥说的 就结合结果的dice分析一下吧
 
+**把结果贴上来，不知道分析什么。。。**
+
 ------
+
+
 
 ## 任务三：糖尿病视网膜病变分级
 
@@ -146,6 +232,8 @@ python train.py --data-path datasets_for_U-net --epochs 30 --batch-size 4
 这一任务在许多深度学习的比赛中都曾出现，我们在查阅资料时发现，大多数效果较好的模型都是采用了Efficient Net，也有一部分是结合了Res-Net、Inception、Mobile Net做集成学习，但是后者的训练代价是很大的，而且效果也没有特别明显的突破。所以我们最终还是决定选用efficient net v2来做这个分类任务。
 
 Efficient Net的作者通过调整网络的宽度、深度以及输入网络的分辨率来提升网络的性能，最终得到了一系列适用于不同分表率的模型。但是第一代Efficient Net在训练时却很耗费显存并且收敛速度也没有达到理想值，因此作者对第一代的网络做了一些改动，使用Fused-MBConv替换掉了浅层的MBConv，并且设计了渐进式的学习策略来减少训练时间。
+
+
 
 ### 训练流程
 
@@ -191,6 +279,8 @@ efficientnetV2_for_classification
 
 这里我们最先做的是四分类任务，如果要改成二分类，手动将文件夹0、1和文件夹2、3分别合并即可。
 
+
+
 #### 模型训练：
 
 按照文件目录设置好以后，在`train.py`的参数列表中修改相应路径，或直接在命令行中输入下面的命令即可进行训练。
@@ -213,9 +303,41 @@ path: 3/20051020_44598_0100_PP.png    3    2
 ...
 ```
 
+
+
 ### 实验和结果分析
 
 #这个对比一下数据增强前后 还有冻结权重
+
+**数据预处理**
+
+- 基于眼球的resize： scaleRadius()
+
+因为不同图片长宽比不同，且眼球外围黑边宽度各不相同，所以resize不能以整个图像的尺寸为准。因此，以眼球半径为基准，resize图片。
+
+
+
+- 特征增强
+
+第二步是关键的一步，使得不同图像显示效果更加一致，同时凸显特征。
+
+
+
+- 去除眼球周围部分
+
+| <img src="doc\classification_normal_0.png" style="zoom: 50%;" /> | <img src="doc\classfication_transform_0.png" style="zoom: 50%;" /> |
+| :----------------------------------------------------------: | :----------------------------------------------------------: |
+| <img src="doc\classification_normal_3.png" style="zoom:50%;" /> | <img src="doc\classification_transform_3.png" style="zoom:50%;" /> |
+
+
+
+**训练过程对比:**
+
+
+
+**结果分析:**
+
+
 
 ------
 
