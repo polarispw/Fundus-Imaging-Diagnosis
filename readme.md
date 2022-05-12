@@ -128,7 +128,7 @@ TensorBoard: Start with 'tensorboard --logdir runs\train', view at http://localh
 
 原图像:
 
-<img src="./doc/detection_normal.jpg" style="zoom:33%;" />
+<img src="./doc/detection_normal.jpg" style="zoom: 25%;" />
 
 数据增强:
 
@@ -348,9 +348,9 @@ path: 3/20051020_44598_0100_PP.png    3    2
 
 - 去除眼球周围部分
 
-| <img src="doc/classification_normal_0.png" style="zoom: 50%;" /> | <img src="doc/classfication_transform_0.png" style="zoom: 50%;" /> |
+| <img src="doc/classification_normal_0.png" style="zoom: 25%;" /> | <img src="doc/classfication_transform_0.png" style="zoom: 25%;" /> |
 | :----------------------------------------------------------: | :----------------------------------------------------------: |
-| <img src="doc/classification_normal_3.png" style="zoom:50%;" /> | <img src="doc/classification_transform_3.png" style="zoom:50%;" /> |
+| <img src="doc/classification_normal_3.png" style="zoom: 25%;" /> | <img src="doc/classification_transform_3.png" style="zoom: 25%;" /> |
 
 
 
