@@ -158,7 +158,13 @@ class Estimate():
 
 def train_one_epoch(model, optimizer, data_loader, device, epoch, info_path):
     model.train()
-    estimator = Estimate(4)
+    estimator = Estimate(2)
+
+    weights = torch.tensor([2266, 506, 1206, 684], dtype=torch.float32).cuda()
+    weights = weights / weights.sum()
+    weights = 1.0 / weights
+    class_weights = weights / weights.sum()
+
 
     loss_function = torch.nn.CrossEntropyLoss()
     accu_loss = torch.zeros(1).to(device)  # 累计损失

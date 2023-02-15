@@ -1,5 +1,6 @@
 import os
 import cv2
+import torch
 from PIL import Image
 import numpy as np
 from torch.utils.data import Dataset
@@ -26,7 +27,7 @@ class DriveDataset(Dataset):
         # check files
         for i in self.roi_mask:
             if os.path.exists(i) is False:
-                raise FileNotFoundError(f"file {i} does not exists.")
+                raise FileNotFoundError(f"file {i} does not exist.")
 
     def __getitem__(self, idx):
         # 这里直接用PIL读会卡住
@@ -63,4 +64,9 @@ def cat_list(images, fill_value=0):
     for img, pad_img in zip(images, batched_imgs):
         pad_img[..., :img.shape[-2], :img.shape[-1]].copy_(img)
     return batched_imgs
+
+
+if __name__ == "__main__":
+    imgs = torch.rand(16, 256, 256, 3)
+    cat_list(imgs)
 
