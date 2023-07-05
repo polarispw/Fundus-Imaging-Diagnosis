@@ -1,7 +1,5 @@
 # **智能眼底影像分析**
 
-[原始数据集](https://drive.google.com/drive/folders/1H1xD5riEKEmm_riY_nZoa4Yesi6OS7Rv?usp=sharing)、[模型权重](https://drive.google.com/drive/folders/1cdNCKqMRbC4SzH3-bI2en9IaWtvmGPO2?usp=sharing)
-
 ## 任务一：中心凹检测定位
 
 ### 模型简述
